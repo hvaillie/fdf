@@ -20,10 +20,25 @@
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
 
+typedef struct	s_point
+{
+	int		x;
+	int		y;
+}				t_point;
+
 typedef struct	s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*img_ptr;
+	char	*img_data;
+	int 	bpp;
+	int 	szl;
+	int 	endian;
+	t_point	po;
+	t_point	pd;
+	int		rgb;
+
 }				t_mlx;
 
 #endif

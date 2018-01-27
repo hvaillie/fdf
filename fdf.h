@@ -19,11 +19,17 @@
 # define BLUE 	0x0000FF
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
+# define K_COEFPARA	0.75
+# define K_COEFISO1	0.66
+# define K_COEFISO2	0.66
+# define K_SPACE 30
+# define PROTECT(x,y) if(!x) return (y);
 
 typedef struct	s_point
 {
 	int		x;
 	int		y;
+	int		z;
 }				t_point;
 
 typedef struct	s_mlx
@@ -38,7 +44,31 @@ typedef struct	s_mlx
 	t_point	po;
 	t_point	pd;
 	int		rgb;
-
 }				t_mlx;
 
+typedef struct	s_draw
+{
+	int				diffx;
+	int				diffy;
+	float			incx;
+	float			incy;
+	unsigned int	color;
+	unsigned char	octets[4];
+	int				loops;
+	t_point			p;
+}				t_draw;
+
+typedef struct	s_fdf_elem
+{
+	int		high;
+	int		rgb;
+}				t_fdf_elem;
+
 #endif
+
+typedef struct	s_fdf
+{
+	int				x;
+	int				y;
+	t_fdf_elem		*tfe;
+}				t_fdf;

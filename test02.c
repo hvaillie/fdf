@@ -91,7 +91,6 @@ int main(int argc, char **argv)
 
 	tm.mlx_ptr = mlx_init();
 	tm.win_ptr = mlx_new_window(tm.mlx_ptr, 400, 400, "Window Test 02");
-
 	tm.img_ptr = mlx_new_image(tm.mlx_ptr, 100, 100);
 	tm.img_data = mlx_get_data_addr(tm.img_ptr, &tm.bpp, &tm.szl, &tm.endian);
 	fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm.bpp, tm.szl, tm.endian);
@@ -107,15 +106,7 @@ int main(int argc, char **argv)
 		draw_line(&tm);
 		i = i + 2;
 	}
-/*	tm.po.x = 10;
-	tm.po.y = 10;
-	tm.pd.x = 50;
-	tm.pd.y = 40;
-	tm.rgb = RED;
-	draw_line(&tm);
-*/
 	mlx_put_image_to_window(tm.mlx_ptr, tm.win_ptr,tm.img_ptr, 200, 200);
-
 	mlx_key_hook(tm.win_ptr, key_hook, &tm);
 	mlx_mouse_hook(tm.win_ptr, mouse_hook, &tm);
 	mlx_expose_hook(tm.win_ptr, expose_hook, &tm);

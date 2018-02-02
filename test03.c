@@ -76,7 +76,7 @@ int 	draw_line(t_mlx *tm)
 		j = 0;
 		while(j < tm->bpp / 8)
 		{
-			tm->img_data[(tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + j]
+			tm->img_data[(tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + j + tm->middle]
 			 	= td.octets[j];
 			j++;
 		}
@@ -152,8 +152,10 @@ int		main(int argc, char **argv)
 
 	tm.mlx_ptr = mlx_init();
 	tm.win_ptr = mlx_new_window(tm.mlx_ptr, 1000, 1000, "Window Test 03");
-	tm.img_ptr = mlx_new_image(tm.mlx_ptr, 500, 500);
+	tm.img_ptr = mlx_new_image(tm.mlx_ptr, 300, 300);
 	tm.img_data = mlx_get_data_addr(tm.img_ptr, &tm.bpp, &tm.szl, &tm.endian);
+	tm.middle = (300*300*tm.bpp/8/4);
+	ft_putnbr(tm.middle);
 	fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm.bpp, tm.szl, tm.endian);
 
 	PROTECT((tf = alloc_map(10, 10)), -1);

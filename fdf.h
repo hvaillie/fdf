@@ -20,9 +20,9 @@
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
 # define K_COEFPARA	0.75
-# define K_COEFISO1	0.66
+# define K_COEFISO1	1
 # define K_COEFISO2	0.66
-# define K_SPACE 30
+# define K_SPACE 20
 # define PROTECT(x,y) if(!x) return (y);
 
 typedef struct	s_point
@@ -30,6 +30,8 @@ typedef struct	s_point
 	int		x;
 	int		y;
 	int		z;
+	int		w;
+	int		rgb;
 }				t_point;
 
 typedef struct	s_mlx
@@ -44,6 +46,7 @@ typedef struct	s_mlx
 	t_point	po;
 	t_point	pd;
 	int		rgb;
+	int		middle;
 }				t_mlx;
 
 typedef struct	s_draw

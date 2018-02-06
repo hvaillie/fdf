@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   test04.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvaillie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/23 20:21:01 by hvaillie          #+#    #+#             */
-/*   Updated: 2018/01/23 20:21:06 by hvaillie         ###   ########.fr       */
+/*   Created: 2018/02/06 19:40:22 by hvaillie          #+#    #+#             */
+/*   Updated: 2018/02/06 19:40:25 by hvaillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
+#include "libft.h"
 
-# define PROTECT(x,y) if(!x) return (y);
+int		main(int argc, char **argv)
+{
+	int 	nbpoint;
 
-
-int		copy_check_file(int argc, char **argv);
-
-#endif
+	if (!(nbpoint = copy_check_file(argc, argv)))
+	{
+		ft_putstr("Invalid file\n");
+		return (-1);
+	}
+	//load_file()
+	return (0);
+}

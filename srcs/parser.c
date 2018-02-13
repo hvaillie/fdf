@@ -14,8 +14,9 @@
 #include <unistd.h>
 #include "libft.h"
 #include "get_next_line.h"
+#include "fdf.h"
 
-static int		check_file(char *line, int *nbpoint)
+static int		check_file(char *line, t_fdf *tf)
 {
 	char	**tl;
 	char	**pt;
@@ -26,50 +27,45 @@ static int		check_file(char *line, int *nbpoint)
 	while (tl[i])
 	{
 		pt = ft_strsplit(tl[i], ',');
-		if (!ft_isinteger(pt[0]))
-			return (0);
+		PROTECT(ft_isinteger(pt[0]), KO);
 		if (pt[1])
-		{
-			if (!ft_strnequ(pt[1], "0x", 2))
-				return (0);
-		}
+			PROTECT(ft_strnequ(pt[1], "0x", 2), KO);
 		i++;
 	}
-	if (*nbpoint && *nbpoint != i)
-		return (0);
-	*nbpoint = i;
-	return (i);
+	if (tf->nbpt && tf->nbpt != i)
+		return (KO);
+	tf->nbpt = i;
+	return (OK);
 }
 
-static int		copy_file(ifd, ofd)
+static int		copy_file(int ifd, int ofd, t_fdf *tf)
 {
-	char 	*line;
+	char	*line;
 	int		lg;
-	int		nbpoint;
 
-	nbpoint = 0;
 	while ((lg = get_next_line(ifd, &line)) > 0)
 	{
-		ft_putstr_fd(line, ofd);
-		PROTECT(check_file(line, &nbpoint), 0)
-		ft_putchar_fd('\n', ofd);
+		tf->nbrow++;
+		ft_putendl_fd(line, ofd);
+		PROTECT(check_file(line, tf), KO);
 	}
-	return (nbpoint);
+	if (lg < 0)
+		return (KO);
+	return (OK);
 }
 
-int		copy_check_file(int argc, char **argv)
+int				copy_check_file(int argc, char **argv, t_fdf *tf)
 {
 	int		ifd;
 	int		ofd;
-	int		nbpoint;
 
 	if (argc == 1)
 		ifd = STDIN_FILENO;
 	else
-		PROTECT(((ifd = open(argv[1], O_RDONLY)) >= 0), 0);
-	PROTECT(((ofd = creat("temp.fdf", S_IRWXU)) >= 0), 0);
-	PROTECT(((nbpoint = copy_file(ifd, ofd)) > 0), 0);
+		PROTECT(((ifd = open(argv[1], O_RDONLY)) >= 0), KO);
+	PROTECT(((ofd = creat(TEMPFILE, S_IRWXU)) >= 0), KO);
+	PROTECT(copy_file(ifd, ofd, tf), KO);
 	close(ifd);
 	close(ofd);
-	return (nbpoint);
+	return (OK);
 }

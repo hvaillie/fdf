@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test04.c                                           :+:      :+:    :+:   */
+/*   ft_lgint.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvaillie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/06 19:40:22 by hvaillie          #+#    #+#             */
-/*   Updated: 2018/02/06 19:40:25 by hvaillie         ###   ########.fr       */
+/*   Created: 2017/11/15 15:18:05 by hvaillie          #+#    #+#             */
+/*   Updated: 2017/11/15 15:18:09 by hvaillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-#include "libft.h"
+#include <string.h>
 
-int		main(int argc, char **argv)
+size_t		ft_lgint(int n)
 {
-	int 	nbpoint;
+	size_t		i;
+	long long	nl;
 
-	if (!(nbpoint = copy_check_file(argc, argv)))
+	i = 1;
+	nl = n;
+	if (n < 0)
 	{
-		ft_putstr("Invalid file\n");
-		return (-1);
+		i++;
+		nl = -nl;
 	}
-	//load_file()
-	return (0);
+	while (nl / 10 > 0)
+	{
+		i++;
+		nl = nl / 10;
+	}
+	return (i);
 }

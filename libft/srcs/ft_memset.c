@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvaillie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/23 20:21:01 by hvaillie          #+#    #+#             */
-/*   Updated: 2018/01/23 20:21:06 by hvaillie         ###   ########.fr       */
+/*   Created: 2017/11/11 12:47:49 by hvaillie          #+#    #+#             */
+/*   Updated: 2017/11/11 12:49:02 by hvaillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include <string.h>
 
-# define PROTECT(x,y) if(!x) return (y);
+void		*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*buc;
+	unsigned char	cuc;
+	size_t			i;
 
-
-int		copy_check_file(int argc, char **argv);
-
-#endif
+	buc = (unsigned char *)b;
+	cuc = (unsigned char)c;
+	i = 0;
+	while (i < len)
+	{
+		buc[i] = cuc;
+		i++;
+	}
+	return (b);
+}

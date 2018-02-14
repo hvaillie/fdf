@@ -26,6 +26,8 @@ static void		load_map(char *line, t_fdf *tf, int *i)
 	j = 0;
 	while (tl[j])
 	{
+		tf->tp[*i][j].x = j;
+		tf->tp[*i][j].y = *i;
 		pt = ft_strsplit(tl[j], ',');
 		tf->tp[*i][j].z = ft_atoi(pt[0]);
 		if (pt[1])

@@ -39,7 +39,9 @@ static void		display_line(t_fdf *tf, int i)
 	{
 		if (j > 0)
 			ft_putstr("; ");
-		ft_putnbr(j);
+		ft_putnbr(tf->tp[i][j].x);
+		ft_putchar(',');
+		ft_putnbr(tf->tp[i][j].y);
 		ft_putchar(',');
 		ft_putnbr(tf->tp[i][j].z);
 		ft_putchar(',');

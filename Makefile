@@ -15,7 +15,10 @@ NAME = fdf
 SRC = main.c \
 	  parser.c \
 	  manage_mem.c \
-	  load_file.c
+	  load_file.c \
+	  minix.c \
+	  hooks.c \
+	  draw.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -29,6 +32,7 @@ INC_LIBFT_PATH = libft/includes
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -I $(INC_LIBFT_PATH) -I $(INC_PATH)
+FLAGSO = -lmlx -framework OpenGL -framework Appkit
 
 # COLORS
 C_NO			=	"\033[00m"
@@ -44,7 +48,7 @@ OK				=	$(C_OK)OK$(C_NO)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-		@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+		@$(CC) $(FLAGSO) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 		@echo "Linking" [ $(NAME) ] $(OK)
 
 $(OBJ): $(SRC_POS)

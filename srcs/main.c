@@ -26,8 +26,8 @@ int		main(int argc, char **argv)
 	}
 	PROTECT(alloc_map(&tf), KO_MAIN);
 	PROTECT(load_file(&tf), KO_MAIN);
-	//display_map(&tf);
-	
+	display_map(&tf);
+	setmlx(&tf);
 	free_map(&tf);
 	return (OK_MAIN);
 }

@@ -17,11 +17,55 @@
 #include <math.h>
 #include "libft.h"
 
+void 	rotx(t_mlx *tm, t_point *tp, int i, int j)
+{
+	double rad;
+
+	rad = tm->rox * M_PI / 180;
+	tp->x = tm->tf->tp[i][j].x;
+	tp->y = (cos(rad) * tm->tf->tp[i][j].y)
+	 		- (sin(rad) * tm->tf->tp[i][j].y);
+	tp->z = (sin(rad) * tm->tf->tp[i][j].z)
+	 		+ (cos(rad) * tm->tf->tp[i][j].z);
+}
+
+void 	roty(t_mlx *tm, t_point *tp, int i, int j)
+{
+	double rad;
+
+	rad = tm->roy * M_PI / 180;
+	tp->x = (cos(rad) * tm->tf->tp[i][j].x)
+	 		+ (sin(rad) * tm->tf->tp[i][j].x);
+	tp->y = tm->tf->tp[i][j].y;
+	tp->z = -(sin(rad) * tm->tf->tp[i][j].z)
+	 		+ (cos(rad) * tm->tf->tp[i][j].z);
+}
+
+void 	rotz(t_mlx *tm, t_point *tp, int i, int j)
+{
+	double rad;
+
+	rad = tm->roz * M_PI / 180;
+	tp->x = (cos(rad) * tm->tf->tp[i][j].x)
+	 		- (sin(rad) * tm->tf->tp[i][j].x);
+	tp->y = (sin(rad) * tm->tf->tp[i][j].y)
+	 		+ (cos(rad) * tm->tf->tp[i][j].y);
+	tp->z = tm->tf->tp[i][j].z;
+}
+
+void 	rotxyz(t_mlx *tm, t_point *tp, int i, int j)
+{
+	rotx(tm, tp, i, j);
+	roty(tm, tp, i, j);
+	rotz(tm, tp, i, j);	
+}
+
 int 	draw_line(t_mlx *tm)
 {
 	t_draw			td;
 	int				i;
 	int				j;
+	int				k;
 
 	td.diffx = tm->pd.x - tm->po.x;
 	td.diffy = tm->pd.y - tm->po.y;
@@ -38,17 +82,16 @@ int 	draw_line(t_mlx *tm)
 	{
 		td.p.x = tm->po.x + (td.incx * i);
 		td.p.y = tm->po.y + (td.incy * i);
-		fprintf(stdout, "point %d=(%d,%d) color=%d\n", i, td.p.x, td.p.y, td.color);
 		j = 0;
-		while(j < tm->bpp / 8)
+		k = (tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + tm->shift;
+		//fprintf(stdout, "point %d=(%d,%d) color=%d, k=%d\n", i, td.p.x, td.p.y, td.color, k);
+		while(j < tm->bpp / 8 && k > 0 && k < tm->max)
 		{
-			tm->img_data[(tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + j]
-			 	= td.octets[j];
+			tm->img_data[k + j] = td.octets[j];
 			j++;
 		}
 		i++;
 	}
-	fprintf(stdout, "ici\n");
 	return (td.loops);
 }
 
@@ -56,14 +99,13 @@ void 	draw_map(t_mlx *tm)
 {
 	int				i;
 	int				j;
-	int				x;
-	int				y;
-	int				z;
+	t_point			tp;
 
 	tm->img_ptr = mlx_new_image(tm->mlx_ptr, tm->iszh, tm->iszv);
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp, &tm->szl, &tm->endian);
-	tm->middle = (tm->iszh*tm->iszv*tm->bpp/8/2);
-	fprintf(stdout, "middle=%d\n", tm->middle);
+	tm->max = tm->iszh * tm->iszv * tm->bpp / 8;
+
+	fprintf(stdout, "shift=%d, max=%d\n", tm->shift,tm->max);
 	fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm->bpp, tm->szl, tm->endian);
 	i = 0;
 	while (i < tm->tf->nbrow)
@@ -73,39 +115,31 @@ void 	draw_map(t_mlx *tm)
 		{
 			if (j < tm->tf->nbpt  - 1)
 			{
-				x = (cos(tm->roz) * tm->tf->tp[i][j].x) - (sin(tm->roz) * tm->tf->tp[i][j].x);
-				y = (sin(tm->roz) * tm->tf->tp[i][j].y) + (cos(tm->roz) * tm->tf->tp[i][j].y);
-				z = tm->tf->tp[i][j].z;
-				fprintf(stdout, "x=%d,y=%d,z=%d\n", x,y,z);
-				tm->po.x = (x * tm->szx) + (z * tm->szz * KP) + tm->middle;
-				tm->po.y = (y * tm->szy) + (z * tm->szz * KP / 2) + tm->middle;
-				x = (cos(tm->roz) * tm->tf->tp[i][j + 1].x) - (sin(tm->roz) * tm->tf->tp[i][j + 1].x);
-				y = (sin(tm->roz) * tm->tf->tp[i][j + 1].y) + (cos(tm->roz) * tm->tf->tp[i][j + 1].y);
-				z = tm->tf->tp[i][j + 1].z;
-				fprintf(stdout, "x=%d,y=%d,z=%d\n", x,y,z);
-				tm->pd.x = (x * tm->szx) + (z * tm->szz * KP)  + tm->middle;
-				tm->pd.y = (y * tm->szy) + (z * tm->szz * KP / 2) + tm->middle;
-//				fprintf(stdout, "o=(%d,%d) d=(%d,%d)\n", tm->po.x,tm->po.y,tm->pd.x,tm->pd.y);
+				rotxyz(tm, &tp, i, j);
+				//fprintf(stdout, "x=%d,y=%d,z=%d\n", tp.x,tp.y,tp.z);
+				tm->po.x = (tp.x * tm->szx) + (tp.z * tm->szz * KP);
+				tm->po.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
+				rotxyz(tm, &tp, i, j + 1);
+				//fprintf(stdout, "x=%d,y=%d,z=%d\n", tp.x,tp.y,tp.z);
+				tm->pd.x = (tp.x * tm->szx) + (tp.z * tm->szz * KP);
+				tm->pd.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
+				//fprintf(stdout, "o=(%d,%d) d=(%d,%d)\n", tm->po.x,tm->po.y,tm->pd.x,tm->pd.y);
 				if (tm->tf->tp[i][j + 1].rgb == -1)
-					tm->rgb = WHITE;
+					tm->rgb = WHITE - (tm->tf->tp[i][j].z * 10000);
 				else
 					tm->rgb = tm->tf->tp[i][j + 1].rgb;
 				draw_line(tm);
 			}
 			if (i < tm->tf->nbrow - 1)
 			{
-				x = (cos(tm->roz) * tm->tf->tp[i][j].x) - (sin(tm->roz) * tm->tf->tp[i][j].x);
-				y = (sin(tm->roz) * tm->tf->tp[i][j].y) + (cos(tm->roz) * tm->tf->tp[i][j].y);
-				z = tm->tf->tp[i][j].z;
-				fprintf(stdout, "x=%d,y=%d,z=%d\n", x,y,z);
-				tm->po.x = (x * tm->szx) + (z * tm->szz * KP) + tm->middle;
-				tm->po.y = (y * tm->szy) + (z * tm->szz * KP / 2) + tm->middle;
-				x = (cos(tm->roz) * tm->tf->tp[i + 1][j].x) - (sin(tm->roz) * tm->tf->tp[i + 1][j].x);
-				y = (sin(tm->roz) * tm->tf->tp[i + 1][j].y) + (cos(tm->roz) * tm->tf->tp[i + 1][j].y);
-				z = tm->tf->tp[i + 1][j].z;
-				fprintf(stdout, "x=%d,y=%d,z=%d\n", x,y,z);
-				tm->pd.x = (x * tm->szx) + (z * tm->szz * KP) + tm->middle;
-				tm->pd.y = (y * tm->szy) + (z * tm->szz * KP / 2) + tm->middle;
+				rotxyz(tm, &tp, i, j);
+				//fprintf(stdout, "x=%d,y=%d,z=%d\n", tp.x,tp.y,tp.z);
+				tm->po.x = (tp.x * tm->szx) + (tp.z * tm->szz * KP);
+				tm->po.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
+				rotxyz(tm, &tp, i + 1, j);
+				//fprintf(stdout, "x=%d,y=%d,z=%d\n", tp.x,tp.y,tp.z);
+				tm->pd.x = (tp.x * tm->szx) + (tp.z * tm->szz * KP);
+				tm->pd.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
 				if (tm->tf->tp[i + 1][j].rgb == -1)
 					tm->rgb = WHITE;
 				else

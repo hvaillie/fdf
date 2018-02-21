@@ -26,15 +26,34 @@
 # define NUM6_KEY 88
 # define NUM5_KEY 87
 # define NUM4_KEY 86
+# define NUM3_KEY 85
 # define NUM2_KEY 84
+# define NUM1_KEY 83
+# define NUM0_KEY 82
+# define ARROW_LEFT_KEY 123
+# define ARROW_RIGHT_KEY 124
+# define ARROW_DOWN_KEY 125
+# define ARROW_UP_KEY 126
+# define A_KEY 0
+# define S_KEY 1
+# define Z_KEY 6
+# define X_KEY 7
+# define Q_KEY 12
+# define W_KEY 13
+# define WINDOW_SIZE_H 2000
+# define WINDOW_SIZE_V 1200
+# define IMAGE_SIZE_H 1500
+# define IMAGE_SIZE_V 1200
 # define DEFSZX 20
 # define DEFSZY 20
 # define DEFSZZ 2
-# define DEFROX 30
-# define DEFROY 30
-# define DEFROZ 30
-# define KP 0.75
+# define DEFSHIFT 0
+# define DEFROX 0
+# define DEFROY 0
+# define DEFROZ 0
+# define KP 1
 # define WHITE 0xFFFFFF
+# define GREEN 0x00FF00
 
 typedef struct	s_point
 {
@@ -68,7 +87,8 @@ typedef struct	s_mlx
 	t_point	po;
 	t_point	pd;
 	int		rgb;
-	int		middle;
+	int		shift;
+	int		max;
 	int		szx;
 	int		szy;
 	int		szz;
@@ -101,6 +121,6 @@ int				mouse_hook(int button, int x, int y, void *param);
 int				expose_hook(void *param);
 int				loop_hook(void *param);
 void 			draw_map(t_mlx *tm);
-
+void 			display_window(t_mlx *tm);
 
 #endif

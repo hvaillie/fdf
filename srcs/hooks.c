@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include "libft.h"
 
-
 int 	key_hook(int key, void *param) {
 	t_mlx	*tm;
 
@@ -25,7 +24,15 @@ int 	key_hook(int key, void *param) {
 		fprintf(stdout, "Key=%d\n", key);
 	if (key == ESCAPE_KEY)
 		exit(0);
-	if (key == NUM2_KEY && tm->szy)
+	if (key == ARROW_UP_KEY && tm->shift >= tm->szl * 4)
+		tm->shift -= tm->szl * 4;
+	else if (key == ARROW_DOWN_KEY)
+		tm->shift += tm->szl * 4;
+	else if (key == ARROW_LEFT_KEY && tm->shift)
+		tm->shift -= 16;
+	else if (key == ARROW_RIGHT_KEY)
+		tm->shift += 16;
+	else if (key == NUM2_KEY && tm->szy)
 		tm->szy--;
 	else if (key == NUM4_KEY && tm->szx)
 		tm->szx--;
@@ -34,6 +41,10 @@ int 	key_hook(int key, void *param) {
 		tm->szx = DEFSZX;
 		tm->szy = DEFSZY;
 		tm->szz = DEFSZZ;
+		tm->shift = DEFSHIFT;
+		tm->rox = DEFROX;
+		tm->roy = DEFROY;
+		tm->roz = DEFROZ;
 	}
 	else if (key == NUM6_KEY)
 		tm->szx++;
@@ -43,10 +54,19 @@ int 	key_hook(int key, void *param) {
 		tm->szy++;
 	else if (key == NUM9_KEY)
 		tm->szz++;
-
-	draw_map(tm);
-	mlx_put_image_to_window(tm->mlx_ptr, tm->win_ptr,tm->img_ptr, 100, 100);
-	mlx_destroy_image(tm->mlx_ptr, tm->img_ptr);
+	else if (key == Q_KEY)
+		tm->roz--;
+	else if (key == W_KEY)
+		tm->roz++;
+	else if (key == A_KEY)
+		tm->rox--;
+	else if (key == S_KEY)
+		tm->rox++;
+	else if (key == Z_KEY)
+		tm->roy--;
+	else if (key == X_KEY)
+		tm->roy++;
+	display_window(tm);
 	return (0);
 }
 
@@ -65,9 +85,7 @@ int		expose_hook(void *param)
 
 	tm = (t_mlx*)param;
 	fprintf(stdout, "Expose\n");
-	draw_map(tm);
-	mlx_put_image_to_window(tm->mlx_ptr, tm->win_ptr,tm->img_ptr, 100, 100);
-	mlx_destroy_image(tm->mlx_ptr, tm->img_ptr);
+	display_window(tm);
 	return (0);
 }
 

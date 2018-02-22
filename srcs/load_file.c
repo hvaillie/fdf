@@ -30,6 +30,8 @@ static void		load_map(char *line, t_fdf *tf, int *i)
 		tf->tp[*i][j].y = *i;
 		pt = ft_strsplit(tl[j], ',');
 		tf->tp[*i][j].z = ft_atoi(pt[0]);
+		tf->zmin = ft_min(tf->zmin, tf->tp[*i][j].z);
+		tf->zmax = ft_max(tf->zmax, tf->tp[*i][j].z);
 		if (pt[1])
 			tf->tp[*i][j].rgb = ft_atoi_base(pt[1], 16);
 		else

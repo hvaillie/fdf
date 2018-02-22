@@ -21,17 +21,17 @@ int 	key_hook(int key, void *param) {
 	t_mlx	*tm;
 
 	tm = (t_mlx*)param;
-		fprintf(stdout, "Key=%d\n", key);
+	//fprintf(stdout, "Key=%d\n", key);
 	if (key == ESCAPE_KEY)
 		exit(0);
 	if (key == ARROW_UP_KEY && tm->shift >= tm->szl * 4)
-		tm->shift -= tm->szl * 4;
+		tm->shift -= tm->szl * 8;
 	else if (key == ARROW_DOWN_KEY)
-		tm->shift += tm->szl * 4;
+		tm->shift += tm->szl * 8;
 	else if (key == ARROW_LEFT_KEY && tm->shift)
-		tm->shift -= 16;
+		tm->shift -= 32;
 	else if (key == ARROW_RIGHT_KEY)
-		tm->shift += 16;
+		tm->shift += 32;
 	else if (key == NUM2_KEY && tm->szy)
 		tm->szy--;
 	else if (key == NUM4_KEY && tm->szx)
@@ -84,7 +84,7 @@ int		expose_hook(void *param)
 	t_mlx	*tm;
 
 	tm = (t_mlx*)param;
-	fprintf(stdout, "Expose\n");
+	//fprintf(stdout, "Expose\n");
 	display_window(tm);
 	return (0);
 }

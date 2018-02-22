@@ -19,6 +19,8 @@ int		main(int argc, char **argv)
 
 	tf.nbpt = 0;
 	tf.nbrow = 0;
+	tf.zmin = 0;
+	tf.zmax = 0;
 	if (!(copy_check_file(argc, argv, &tf)))
 	{
 		ft_putendl("Invalid file");

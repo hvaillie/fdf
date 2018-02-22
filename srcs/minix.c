@@ -83,6 +83,8 @@ void		setmlx(t_fdf *tf)
 	tm.rox = DEFROX;
 	tm.roy = DEFROY;
 	tm.roz = DEFROZ;
+	tm.minrgb = DEF_MIN_PALETTE;
+	tm.maxrgb = DEF_MAX_PALETTE;
 	// fprintf(stdout, "middle=%d\n", tm.middle);
 	// fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm.bpp, tm.szl, tm.endian);
 	mlx_key_hook(tm.win_ptr, key_hook, &tm);

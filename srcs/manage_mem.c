@@ -59,6 +59,10 @@ void			display_map(t_fdf *tf)
 	ft_putnbr(tf->nbpt);
 	ft_putstr(" , nbrow=");
 	ft_putnbr(tf->nbrow);
+	ft_putstr(" , Zmin=");
+	ft_putnbr(tf->zmin);
+	ft_putstr(" , Zmax=");
+	ft_putnbr(tf->zmax);
 	ft_putchar('\n');
 	while (i < tf->nbrow)
 	{

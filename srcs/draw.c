@@ -17,6 +17,14 @@
 #include <math.h>
 #include "libft.h"
 
+int		getcolor(t_mlx *tm, int z)
+{
+	double		pas;
+
+	pas = (tm->maxrgb - tm->minrgb) / (tm->tf->zmax - tm->tf->zmin);
+	return (tm->minrgb + pas * (z - tm->tf->zmin));
+}
+
 void 	rotx(t_mlx *tm, t_point *tp, int i, int j)
 {
 	double rad;
@@ -57,7 +65,7 @@ void 	rotxyz(t_mlx *tm, t_point *tp, int i, int j)
 {
 	rotx(tm, tp, i, j);
 	roty(tm, tp, i, j);
-	rotz(tm, tp, i, j);	
+	rotz(tm, tp, i, j);
 }
 
 int 	draw_line(t_mlx *tm)
@@ -85,7 +93,7 @@ int 	draw_line(t_mlx *tm)
 		j = 0;
 		k = (tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + tm->shift;
 		//fprintf(stdout, "point %d=(%d,%d) color=%d, k=%d\n", i, td.p.x, td.p.y, td.color, k);
-		while(j < tm->bpp / 8 && k > 0 && k < tm->max)
+		while(j < tm->bpp / 8 && k >= 0 && k < tm->max)
 		{
 			tm->img_data[k + j] = td.octets[j];
 			j++;
@@ -104,9 +112,10 @@ void 	draw_map(t_mlx *tm)
 	tm->img_ptr = mlx_new_image(tm->mlx_ptr, tm->iszh, tm->iszv);
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp, &tm->szl, &tm->endian);
 	tm->max = tm->iszh * tm->iszv * tm->bpp / 8;
-
-	fprintf(stdout, "shift=%d, max=%d\n", tm->shift,tm->max);
-	fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm->bpp, tm->szl, tm->endian);
+	if (tm->shift == DEFSHIFT)
+		tm->shift = ft_abs(tm->tf->zmin * tm->szl) + ft_abs(tm->tf->zmax * tm->bpp / 8 * tm->szz);
+	//fprintf(stdout, "shift=%d, max=%d\n", tm->shift,tm->max);
+	//fprintf(stdout, "bpp=%d, szl=%d, endian=%d\n", tm->bpp, tm->szl, tm->endian);
 	i = 0;
 	while (i < tm->tf->nbrow)
 	{
@@ -125,7 +134,7 @@ void 	draw_map(t_mlx *tm)
 				tm->pd.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
 				//fprintf(stdout, "o=(%d,%d) d=(%d,%d)\n", tm->po.x,tm->po.y,tm->pd.x,tm->pd.y);
 				if (tm->tf->tp[i][j + 1].rgb == -1)
-					tm->rgb = WHITE - (tm->tf->tp[i][j].z * 10000);
+					tm->rgb = getcolor(tm, tm->tf->tp[i][j + 1].z);
 				else
 					tm->rgb = tm->tf->tp[i][j + 1].rgb;
 				draw_line(tm);
@@ -141,7 +150,7 @@ void 	draw_map(t_mlx *tm)
 				tm->pd.x = (tp.x * tm->szx) + (tp.z * tm->szz * KP);
 				tm->pd.y = (tp.y * tm->szy) + (tp.z * tm->szz * KP / 2);
 				if (tm->tf->tp[i + 1][j].rgb == -1)
-					tm->rgb = WHITE;
+					tm->rgb = getcolor(tm, tm->tf->tp[i + 1][j].z);
 				else
 					tm->rgb = tm->tf->tp[i + 1][j].rgb;
 				draw_line(tm);

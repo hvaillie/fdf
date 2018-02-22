@@ -47,13 +47,18 @@
 # define DEFSZX 20
 # define DEFSZY 20
 # define DEFSZZ 2
-# define DEFSHIFT 0
+# define DEFSHIFT -1
 # define DEFROX 0
 # define DEFROY 0
 # define DEFROZ 0
 # define KP 1
-# define WHITE 0xFFFFFF
+# define BLACK 0x000000
+# define BLUE 0x0000FF
 # define GREEN 0x00FF00
+# define RED 0xFF0000
+# define WHITE 0xFFFFFF
+# define DEF_MIN_PALETTE 0x00FF00
+# define DEF_MAX_PALETTE 0xFFFFFF
 
 typedef struct	s_point
 {
@@ -66,9 +71,11 @@ typedef struct	s_point
 
 typedef struct	s_fdf
 {
-	int				nbpt;
-	int				nbrow;
-	t_point			**tp;
+	int		nbpt;
+	int		nbrow;
+	int		zmax;
+	int		zmin;
+	t_point	**tp;
 }				t_fdf;
 
 typedef struct	s_mlx
@@ -95,6 +102,8 @@ typedef struct	s_mlx
 	int		rox;
 	int		roy;
 	int		roz;
+	int		minrgb;
+	int		maxrgb;
 	t_fdf	*tf;
 }				t_mlx;
 

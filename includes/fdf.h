@@ -40,10 +40,16 @@
 # define X_KEY 7
 # define Q_KEY 12
 # define W_KEY 13
+# define BUT_1 1
+# define BUT_2 2
+# define BUT_4 4
+# define BUT_5 5
+# define BUT_6 6
+# define BUT_7 7
 # define WINDOW_SIZE_H 2000
 # define WINDOW_SIZE_V 1200
-# define IMAGE_SIZE_H 1500
-# define IMAGE_SIZE_V 1200
+# define IMAGE_SIZE_H 1980
+# define IMAGE_SIZE_V 1090
 # define DEFSZX 20
 # define DEFSZY 20
 # define DEFSZZ 2
@@ -57,8 +63,10 @@
 # define GREEN 0x00FF00
 # define RED 0xFF0000
 # define WHITE 0xFFFFFF
-# define DEF_MIN_PALETTE 0x00FF00
+# define DEF_MIN_PALETTE 0x002000
 # define DEF_MAX_PALETTE 0xFFFFFF
+# define PROJPAR 'P'
+# define PROJISO 'I'
 
 typedef struct	s_point
 {
@@ -88,9 +96,9 @@ typedef struct	s_mlx
 	int		wszv;
 	int		iszh;
 	int		iszv;
-	int 	bpp;
-	int 	szl;
-	int 	endian;
+	int		bpp;
+	int		szl;
+	int		endian;
 	t_point	po;
 	t_point	pd;
 	int		rgb;
@@ -104,6 +112,7 @@ typedef struct	s_mlx
 	int		roz;
 	int		minrgb;
 	int		maxrgb;
+	char	proj;
 	t_fdf	*tf;
 }				t_mlx;
 
@@ -125,11 +134,19 @@ void			display_map(t_fdf *tf);
 void			free_map(t_fdf *tf);
 int				load_file(t_fdf *tf);
 void			setmlx(t_fdf *tf);
-int 			key_hook(int key, void *param);
+void			setvar(t_mlx *tm);
+int				key_hook(int key, void *param);
+int				key_hook_arrow(int key, t_mlx *tm);
+int				key_hook_num(int key, t_mlx *tm);
+int				key_hook_alpha(int key, t_mlx *tm);
 int				mouse_hook(int button, int x, int y, void *param);
 int				expose_hook(void *param);
 int				loop_hook(void *param);
-void 			draw_map(t_mlx *tm);
-void 			display_window(t_mlx *tm);
+void			draw_map(t_mlx *tm);
+void			display_window(t_mlx *tm);
+void			projo(t_mlx *tm, t_point *tp);
+void			projd(t_mlx *tm, t_point *tp);
+void			rotxyz(t_mlx *tm, t_point *tp, int i, int j);
+void			setcolor(t_mlx *tm, int i, int j);
 
 #endif

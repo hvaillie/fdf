@@ -55,15 +55,6 @@ void			display_map(t_fdf *tf)
 	int		i;
 
 	i = 0;
-	ft_putstr("Map nbpt=");
-	ft_putnbr(tf->nbpt);
-	ft_putstr(" , nbrow=");
-	ft_putnbr(tf->nbrow);
-	ft_putstr(" , Zmin=");
-	ft_putnbr(tf->zmin);
-	ft_putstr(" , Zmax=");
-	ft_putnbr(tf->zmax);
-	ft_putchar('\n');
 	while (i < tf->nbrow)
 	{
 		ft_putstr("Elem (");
@@ -73,6 +64,15 @@ void			display_map(t_fdf *tf)
 		ft_putendl("'");
 		i++;
 	}
+	ft_putstr("Map nbpt=");
+	ft_putnbr(tf->nbpt);
+	ft_putstr(" , nbrow=");
+	ft_putnbr(tf->nbrow);
+	ft_putstr(" , Zmin=");
+	ft_putnbr(tf->zmin);
+	ft_putstr(" , Zmax=");
+	ft_putnbr(tf->zmax);
+	ft_putchar('\n');
 }
 
 void			free_map(t_fdf *tf)

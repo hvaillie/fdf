@@ -18,7 +18,11 @@ SRC = main.c \
 	  load_file.c \
 	  minix.c \
 	  hooks.c \
-	  draw.c
+	  draw.c \
+	  projection.c \
+	  keyhooks.c \
+	  rotation.c \
+	  color.c
 
 OBJ = $(SRC:.c=.o)
 

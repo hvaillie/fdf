@@ -17,56 +17,19 @@
 #include <stdlib.h>
 #include "libft.h"
 
-int 	key_hook(int key, void *param) {
+int		key_hook(int key, void *param)
+{
 	t_mlx	*tm;
+	int		ret;
 
 	tm = (t_mlx*)param;
-	//fprintf(stdout, "Key=%d\n", key);
 	if (key == ESCAPE_KEY)
 		exit(0);
-	if (key == ARROW_UP_KEY && tm->shift >= tm->szl * 4)
-		tm->shift -= tm->szl * 8;
-	else if (key == ARROW_DOWN_KEY)
-		tm->shift += tm->szl * 8;
-	else if (key == ARROW_LEFT_KEY && tm->shift)
-		tm->shift -= 32;
-	else if (key == ARROW_RIGHT_KEY)
-		tm->shift += 32;
-	else if (key == NUM2_KEY && tm->szy)
-		tm->szy--;
-	else if (key == NUM4_KEY && tm->szx)
-		tm->szx--;
-	else if (key == NUM5_KEY)
-	{
-		tm->szx = DEFSZX;
-		tm->szy = DEFSZY;
-		tm->szz = DEFSZZ;
-		tm->shift = DEFSHIFT;
-		tm->rox = DEFROX;
-		tm->roy = DEFROY;
-		tm->roz = DEFROZ;
-	}
-	else if (key == NUM6_KEY)
-		tm->szx++;
-	else if (key == NUM7_KEY && tm->szz)
-		tm->szz--;
-	else if (key == NUM8_KEY)
-		tm->szy++;
-	else if (key == NUM9_KEY)
-		tm->szz++;
-	else if (key == Q_KEY)
-		tm->roz--;
-	else if (key == W_KEY)
-		tm->roz++;
-	else if (key == A_KEY)
-		tm->rox--;
-	else if (key == S_KEY)
-		tm->rox++;
-	else if (key == Z_KEY)
-		tm->roy--;
-	else if (key == X_KEY)
-		tm->roy++;
-	display_window(tm);
+	if (!(ret = key_hook_arrow(key, tm)))
+		if (!(ret = key_hook_num(key, tm)))
+			ret = key_hook_alpha(key, tm);
+	if (ret)
+		display_window(tm);
 	return (0);
 }
 
@@ -75,7 +38,17 @@ int		mouse_hook(int button, int x, int y, void *param)
 	t_mlx	*tm;
 
 	tm = (t_mlx*)param;
-	fprintf(stdout, "Mouse Button=%d ,x=%d ,y=%d\n", button, x, y);
+	(void)x;
+	(void)y;
+	if ((button == BUT_1 || button == BUT_4) && tm->minrgb > BLACK)
+		tm->minrgb -= DEF_MIN_PALETTE;
+	else if ((button == BUT_2 || button == BUT_5) && tm->minrgb < WHITE)
+		tm->minrgb += DEF_MIN_PALETTE;
+	else if (button == BUT_6 && tm->maxrgb < WHITE)
+		tm->maxrgb += DEF_MIN_PALETTE;
+	else if (button == BUT_7 && tm->maxrgb > BLACK)
+		tm->maxrgb -= DEF_MIN_PALETTE;
+	display_window(tm);
 	return (0);
 }
 
@@ -84,7 +57,6 @@ int		expose_hook(void *param)
 	t_mlx	*tm;
 
 	tm = (t_mlx*)param;
-	//fprintf(stdout, "Expose\n");
 	display_window(tm);
 	return (0);
 }

@@ -14,18 +14,42 @@
 
 void	projo(t_mlx *tm, t_point *tp)
 {
+	int		x;
+	int		y;
+	int		z;
+
+	x = tp->x * tm->szx;
+	y = tp->y * tm->szy;
+	z = tp->z * tm->szz;
 	if (tm->proj == PROJPAR)
 	{
-		tm->po.x = (tp->x * tm->szx) + (tp->z * tm->szz * KP);
-		tm->po.y = (tp->y * tm->szy) + (tp->z * tm->szz * KP / 2);
+		tm->po.x = x + (z * KP);
+		tm->po.y = y + (z * KP / 2);
+	}
+	else
+	{
+		tm->po.x = (x * KI1) - (y * KI2);
+		tm->po.y = (x * KI1 / 2) + (y * KI2 / 2) + z;
 	}
 }
 
 void	projd(t_mlx *tm, t_point *tp)
 {
+	int		x;
+	int		y;
+	int		z;
+
+	x = tp->x * tm->szx;
+	y = tp->y * tm->szy;
+	z = tp->z * tm->szz;
 	if (tm->proj == PROJPAR)
 	{
-		tm->pd.x = (tp->x * tm->szx) + (tp->z * tm->szz * KP);
-		tm->pd.y = (tp->y * tm->szy) + (tp->z * tm->szz * KP / 2);
+		tm->pd.x = x + (z * KP);
+		tm->pd.y = y + (z * KP / 2);
+	}
+	else
+	{
+		tm->pd.x = (x * KI1) - (y * KI2);
+		tm->pd.y = (x * KI1 / 2) + (y * KI2 / 2) + z;
 	}
 }

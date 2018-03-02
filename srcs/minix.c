@@ -91,7 +91,7 @@ void			setvar(t_mlx *tm)
 	tm->roz = DEFROZ;
 	tm->minrgb = DEF_MIN_PALETTE;
 	tm->maxrgb = DEF_MAX_PALETTE;
-	tm->proj = PROJPAR;
+	tm->proj = PROJISO;
 }
 
 void			setmlx(t_fdf *tf)

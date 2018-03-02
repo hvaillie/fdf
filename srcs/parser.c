@@ -49,8 +49,8 @@ static int		copy_file(int ifd, int ofd, t_fdf *tf)
 		ft_putendl_fd(line, ofd);
 		PROTECT(check_file(line, tf), KO);
 	}
-	if (lg < 0)
-		return (KO);
+	if (lg < 0 || tf->nbrow == 0 || tf->nbpt == 0)
+		return (KO);	
 	return (OK);
 }
 

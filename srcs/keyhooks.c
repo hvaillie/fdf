@@ -31,15 +31,15 @@ int		key_hook_num(int key, t_mlx *tm)
 {
 	PROTECT((key == NUM2_KEY || key == NUM4_KEY || key == NUM5_KEY || key ==
 	NUM6_KEY || key == NUM7_KEY || key == NUM8_KEY || key == NUM9_KEY), KO);
-	if (key == NUM2_KEY && tm->szy)
+	if (key == NUM2_KEY)
 		tm->szy--;
-	else if (key == NUM4_KEY && tm->szx)
+	else if (key == NUM4_KEY)
 		tm->szx--;
 	else if (key == NUM5_KEY)
 		setvar(tm);
 	else if (key == NUM6_KEY)
 		tm->szx++;
-	else if (key == NUM7_KEY && tm->szz)
+	else if (key == NUM7_KEY)
 		tm->szz--;
 	else if (key == NUM8_KEY)
 		tm->szy++;
@@ -51,7 +51,7 @@ int		key_hook_num(int key, t_mlx *tm)
 int		key_hook_alpha(int key, t_mlx *tm)
 {
 	PROTECT((key == Q_KEY || key == W_KEY || key == A_KEY || key == S_KEY ||
-	key == Z_KEY || key == X_KEY), KO);
+	key == Z_KEY || key == X_KEY || key == I_KEY|| key == P_KEY), KO);
 	if (key == Q_KEY)
 		tm->roz--;
 	else if (key == W_KEY)
@@ -64,5 +64,9 @@ int		key_hook_alpha(int key, t_mlx *tm)
 		tm->roy--;
 	else if (key == X_KEY)
 		tm->roy++;
+	else if (key == I_KEY)
+		tm->proj = PROJISO;
+	else if (key == P_KEY)
+		tm->proj = PROJPAR;
 	return (OK);
 }

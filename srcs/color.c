@@ -15,8 +15,10 @@
 static int	getcolor(t_mlx *tm, int z)
 {
 	double		pas;
+	int			maxmoinsmin;
 
-	pas = (tm->maxrgb - tm->minrgb) / (tm->tf->zmax - tm->tf->zmin);
+	maxmoinsmin = tm->tf->zmax - tm->tf->zmin;
+	pas = (tm->maxrgb - tm->minrgb) / ((maxmoinsmin == 0) ? 1 : maxmoinsmin);
 	return (tm->minrgb + pas * (z - tm->tf->zmin));
 }
 

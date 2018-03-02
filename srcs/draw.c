@@ -86,10 +86,10 @@ void			draw_map(t_mlx *tm)
 	tm->img_ptr = mlx_new_image(tm->mlx_ptr, tm->iszh, tm->iszv);
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp,
 									&tm->szl, &tm->endian);
-	tm->max = tm->iszh * tm->iszv * tm->bpp / 8;
+	tm->max = tm->iszh * tm->iszv * (tm->bpp / 8);
 	if (tm->shift == DEFSHIFT)
 		tm->shift = ft_abs(tm->tf->zmin * tm->szl)
-			+ ft_abs(tm->tf->zmax * tm->bpp / 8 * tm->szz);
+			+ ft_abs(tm->tf->zmax * (tm->bpp / 8) * tm->szz);
 	i = 0;
 	while (i < tm->tf->nbrow)
 	{

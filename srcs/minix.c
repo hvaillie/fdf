@@ -75,12 +75,12 @@ void			setvar(t_mlx *tm)
 	tm->iszh = IMAGE_SIZE_H;
 	tm->iszv = IMAGE_SIZE_V;
 	tm->shift = DEFSHIFT;
-	tm->szx = WINDOW_SIZE_H / tm->tf->nbpt;
+	tm->szx = IMAGE_SIZE_H / tm->tf->nbpt;
 	if (tm->szx == 0)
 		tm->szx = 1;
 	if (tm->szx > DEFSZX)
 		tm->szx = DEFSZX;
-	tm->szy = WINDOW_SIZE_V / tm->tf->nbrow;
+	tm->szy = IMAGE_SIZE_V / tm->tf->nbrow;
 	if (tm->szy == 0)
 		tm->szy = 1;
 	if (tm->szy > DEFSZY)

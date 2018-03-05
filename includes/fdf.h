@@ -153,5 +153,7 @@ void			projo(t_mlx *tm, t_point *tp);
 void			projd(t_mlx *tm, t_point *tp);
 void			rotxyz(t_mlx *tm, t_point *tp, int i, int j);
 void			setcolor(t_mlx *tm, int i, int j);
+int				compute_shift(t_mlx *tm);
+int				check_pos(t_mlx *tm, t_draw *td, int *k);
 
 #endif

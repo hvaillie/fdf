@@ -45,12 +45,13 @@ static int		draw_line(t_mlx *tm)
 		td.p.x = tm->po.x + (td.incx * i);
 		td.p.y = tm->po.y + (td.incy * i);
 		j = 0;
-		k = (tm->szl * td.p.y) + (tm->bpp / 8 * td.p.x) + tm->shift;
-		while (j < tm->bpp / 8 && k >= 0 && k < tm->max
-			 && tm->bpp / 8 * td.p.x <= tm->szl)
+		if (check_pos(tm, &td, &k))
 		{
-			tm->img_data[k + j] = td.octets[j];
-			j++;
+			while (j < tm->bpp / 8)
+			{
+				tm->img_data[k + j] = td.octets[j];
+				j++;
+			}
 		}
 		i++;
 	}
@@ -87,9 +88,7 @@ void			draw_map(t_mlx *tm)
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp,
 									&tm->szl, &tm->endian);
 	tm->max = tm->iszh * tm->iszv * (tm->bpp / 8);
-	if (tm->shift == DEFSHIFT)
-		tm->shift = ft_abs(tm->tf->zmin * tm->szl)
-			+ ft_abs(tm->tf->zmax * (tm->bpp / 8) * tm->szz);
+	tm->shift = compute_shift(tm);
 	i = 0;
 	while (i < tm->tf->nbrow)
 	{

@@ -51,7 +51,7 @@ int		key_hook_num(int key, t_mlx *tm)
 int		key_hook_alpha(int key, t_mlx *tm)
 {
 	PROTECT((key == Q_KEY || key == W_KEY || key == A_KEY || key == S_KEY ||
-	key == Z_KEY || key == X_KEY || key == I_KEY|| key == P_KEY), KO);
+	key == Z_KEY || key == X_KEY || key == I_KEY || key == P_KEY), KO);
 	if (key == Q_KEY)
 		tm->roz--;
 	else if (key == W_KEY)

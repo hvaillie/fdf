@@ -50,7 +50,7 @@ static int		copy_file(int ifd, int ofd, t_fdf *tf)
 		PROTECT(check_file(line, tf), KO);
 	}
 	if (lg < 0 || tf->nbrow == 0 || tf->nbpt == 0)
-		return (KO);	
+		return (KO);
 	return (OK);
 }
 

@@ -18,29 +18,31 @@
 #include <math.h>
 #include "libft.h"
 
+char	*concat_legend(char *str, char *l, int v, char *(*f)(int v))
+{
+	char	*vx;
+
+	str = ft_strcat(str, l);
+	vx = f(v);
+	str = ft_strcat(str, vx);
+	free(vx);
+	return (str);
+}
+
 static void		legende_val(t_mlx *tm, char *str)
 {
 	mlx_string_put(tm->mlx_ptr, tm->win_ptr, 800, 1, GREEN, "Valeurs");
-	str = ft_strcat(str, "shift=");
-	str = ft_strcat(str, ft_itoa(tm->shift));
-	str = ft_strcat(str, " szX=");
-	str = ft_strcat(str, ft_itoa(tm->szx));
-	str = ft_strcat(str, " szY=");
-	str = ft_strcat(str, ft_itoa(tm->szy));
-	str = ft_strcat(str, " szZ=");
-	str = ft_strcat(str, ft_itoa(tm->szz));
-	str = ft_strcat(str, " roX=");
-	str = ft_strcat(str, ft_itoa(tm->rox));
-	str = ft_strcat(str, " roY=");
-	str = ft_strcat(str, ft_itoa(tm->roy));
-	str = ft_strcat(str, " roZ=");
-	str = ft_strcat(str, ft_itoa(tm->roz));
+	str = concat_legend(str, "shift=", tm->shift, &ft_itoa);
+	str = concat_legend(str, " szX=", tm->szx, &ft_itoa);
+	str = concat_legend(str, " szY=", tm->szy, &ft_itoa);
+	str = concat_legend(str, " szZ=", tm->szz, &ft_itoa);
+	str = concat_legend(str, " roX=", tm->rox, &ft_itoa);
+	str = concat_legend(str, " roY=", tm->roy, &ft_itoa);
+	str = concat_legend(str, " roZ=", tm->roz, &ft_itoa);
 	mlx_string_put(tm->mlx_ptr, tm->win_ptr, 800, 20, WHITE, str);
 	ft_bzero((void*)str, 100);
-	str = ft_strcat(str, "minRGB=");
-	str = ft_strcat(str, ft_itoa_base(tm->minrgb, 16));
-	str = ft_strcat(str, " maxRGB=");
-	str = ft_strcat(str, ft_itoa_base(tm->maxrgb, 16));
+	str = concat_legend(str, "minRGB=", tm->minrgb, &ft_itoa_base_16);
+	str = concat_legend(str, " maxRGB=", tm->maxrgb, &ft_itoa_base_16);
 	mlx_string_put(tm->mlx_ptr, tm->win_ptr, 800, 40, WHITE, str);
 }
 

@@ -42,3 +42,16 @@ void			free_map(t_fdf *tf)
 	}
 	free(tf->tp);
 }
+
+void			free_split(char **c)
+{
+	int		i;
+
+	i = 0;
+	while (c[i])
+	{
+		free(c[i]);
+		i++;
+	}
+	free(c);
+}

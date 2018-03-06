@@ -137,6 +137,7 @@ int				copy_check_file(int argc, char **argv, t_fdf *tf);
 int				alloc_map(t_fdf *tf);
 void			display_map(t_fdf *tf);
 void			free_map(t_fdf *tf);
+void			free_split(char **c);
 int				load_file(t_fdf *tf);
 void			setmlx(t_fdf *tf);
 void			setvar(t_mlx *tm);

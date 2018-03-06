@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
 #include "fdf.h"
 #include "libft.h"
 
@@ -60,10 +62,12 @@ int		compute_shift(t_mlx *tm)
 	t_point			tp;
 	int				shift;
 	int				sz;
+	int				x;
+	int				y;
 
 	if (tm->proj == PROJPAR)
-		shift = (((tm->iszv - (tm->tf->nbrow * tm->szy)) / 2) * tm->szl)
-		+ ((tm->iszh - (tm->tf->nbpt * tm->szx)) / 2 * (tm->bpp / 8));
+		shift = (((tm->iszv - ((tm->tf->nbrow - 1) * tm->szy)) / 2) * tm->szl)
+		+ (((tm->iszh - ((tm->tf->nbpt - 1) * tm->szx)) / 2) * (tm->bpp / 8));
 	else
 	{
 		rotxyz(tm, &tp, 0, 0);
@@ -80,6 +84,9 @@ int		compute_shift(t_mlx *tm)
 		shift += ((tm->iszh - sz) / 2) * (tm->bpp / 8);
 		shift += (tm->pd.x > 0) ? 0 : ft_abs(tm->pd.x) * (tm->bpp / 8);
 	}
+	y = shift / tm->szl;
+	x = shift % tm->szl;
+	printf("col=%d, lig=%d, szl=%d\n",x,y,tm->szl);
 	return (shift);
 }
 

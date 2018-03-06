@@ -32,6 +32,8 @@ static int		check_file(char *line, t_fdf *tf)
 			PROTECT(ft_strnequ(pt[1], "0x", 2), KO);
 		i++;
 	}
+	free_split(pt);
+	free_split(tl);
 	if (tf->nbpt && tf->nbpt != i)
 		return (KO);
 	tf->nbpt = i;
@@ -49,6 +51,7 @@ static int		copy_file(int ifd, int ofd, t_fdf *tf)
 		ft_putendl_fd(line, ofd);
 		PROTECT(check_file(line, tf), KO);
 	}
+	ft_memdel((void**)&line);
 	if (lg < 0 || tf->nbrow == 0 || tf->nbpt == 0)
 		return (KO);
 	return (OK);

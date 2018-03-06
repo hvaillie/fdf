@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include <mlx.h>
 #include "fdf.h"
@@ -24,7 +25,11 @@ int		key_hook(int key, void *param)
 
 	tm = (t_mlx*)param;
 	if (key == ESCAPE_KEY)
+	{
+		free_map(tm->tf);
+		sleep(6000);
 		exit(0);
+	}
 	if (!(ret = key_hook_arrow(key, tm)))
 		if (!(ret = key_hook_num(key, tm)))
 			ret = key_hook_alpha(key, tm);

@@ -10,24 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+//#include <stdio.h>
 
 #include <mlx.h>
 #include "fdf.h"
 #include <stdlib.h>
 #include <math.h>
 #include "libft.h"
-
-char	*concat_legend(char *str, char *l, int v, char *(*f)(int v))
-{
-	char	*vx;
-
-	str = ft_strcat(str, l);
-	vx = f(v);
-	str = ft_strcat(str, vx);
-	free(vx);
-	return (str);
-}
 
 static void		legende_val(t_mlx *tm, char *str)
 {

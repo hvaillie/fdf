@@ -39,7 +39,7 @@ char		*ft_itoa_base(int value, int base)
 	if (base == 10 && value < 0)
 		tmp[++i] = '-';
 	j = 0;
-	if (!(str = ft_strnew(i)))
+	if (!(str = ft_strnew(i + 1)))
 		return (NULL);
 	while (i >= 0)
 		str[j++] = tmp[i--];

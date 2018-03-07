@@ -23,7 +23,8 @@ SRC = main.c \
 	  keyhooks.c \
 	  rotation.c \
 	  color.c \
-	  debug.c
+	  debug.c \
+	  util.c
 
 OBJ = $(SRC:.c=.o)
 

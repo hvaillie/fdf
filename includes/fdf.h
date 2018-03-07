@@ -156,5 +156,8 @@ void			rotxyz(t_mlx *tm, t_point *tp, int i, int j);
 void			setcolor(t_mlx *tm, int i, int j);
 int				compute_shift(t_mlx *tm);
 int				check_pos(t_mlx *tm, t_draw *td, int *k);
+char			*concat_legend(char *str, char *l, int v, char *(*f)(int v));
+int				min4(int i[4]);
+int				max4(int i[4]);
 
 #endif

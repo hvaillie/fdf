@@ -36,8 +36,10 @@ static void		load_map(char *line, t_fdf *tf, int *i)
 			tf->tp[*i][j].rgb = ft_atoi_base(pt[1], 16);
 		else
 			tf->tp[*i][j].rgb = -1;
+		free_split(pt);
 		j++;
 	}
+	free_split(tl);
 }
 
 int				load_file(t_fdf *tf)
@@ -52,6 +54,7 @@ int				load_file(t_fdf *tf)
 	while ((lg = get_next_line(ifd, &line)) > 0)
 	{
 		load_map(line, tf, &i);
+		free(line);
 		i++;
 	}
 	if (lg < 0)

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <unistd.h>
 
 #include <mlx.h>
 #include "fdf.h"
@@ -27,7 +26,7 @@ int		key_hook(int key, void *param)
 	if (key == ESCAPE_KEY)
 	{
 		free_map(tm->tf);
-		sleep(6000);
+		mlx_destroy_window(tm->mlx_ptr, tm->win_ptr);
 		exit(0);
 	}
 	if (!(ret = key_hook_arrow(key, tm)))

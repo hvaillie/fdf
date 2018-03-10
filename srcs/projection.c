@@ -10,13 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-#include <math.h>
 #include "fdf.h"
 #include "libft.h"
 
-void	projo(t_mlx *tm, t_point *tp)
+void		projo(t_mlx *tm, t_point *tp)
 {
 	int		x;
 	int		y;
@@ -37,7 +34,7 @@ void	projo(t_mlx *tm, t_point *tp)
 	}
 }
 
-void	projd(t_mlx *tm, t_point *tp)
+void		projd(t_mlx *tm, t_point *tp)
 {
 	int		x;
 	int		y;
@@ -58,72 +55,48 @@ void	projd(t_mlx *tm, t_point *tp)
 	}
 }
 
-int		compute_shift(t_mlx *tm)
+static void	map_xy(t_mlx *tm, int x[4], int y[4], int i)
+{
+	y[0 + i] = tm->po.y;
+	y[1 + i] = tm->pd.y;
+	x[0 + i] = tm->po.x;
+	x[1 + i] = tm->pd.x;
+}
+
+int			compute_shift(t_mlx *tm)
 {
 	t_point			tp;
-	int				shift;
 	int				x[4];
 	int				y[4];
 
 	if (tm->proj == PROJPAR)
-		shift = (((tm->iszv - ((tm->tf->nbrow - 1) * tm->szy)) / 2) * tm->szl)
-		+ (((tm->iszh - ((tm->tf->nbpt - 1) * tm->szx)) / 2) * (tm->bpp / 8));
+		return ((((tm->iszv - ((tm->tf->nbrow - 1) * tm->szy)) / 2) * tm->szl)
+		+ (((tm->iszh - ((tm->tf->nbpt - 1) * tm->szx)) / 2) * (tm->bpp / 8)));
 	else
 	{
 		rotxyz(tm, &tp, 0, 0);
 		projo(tm, &tp);
 		rotxyz(tm, &tp, tm->tf->nbrow - 1, tm->tf->nbpt - 1);
 		projd(tm, &tp);
-		y[0] = tm->po.y;
-		y[1] = tm->pd.y;
-		x[0] = tm->po.x;
-		x[1] = tm->pd.x;
+		map_xy(tm, x, y, 0);
 		rotxyz(tm, &tp, 0, tm->tf->nbpt - 1);
 		projo(tm, &tp);
 		rotxyz(tm, &tp, tm->tf->nbrow - 1, 0);
 		projd(tm, &tp);
-		y[2] = tm->po.y;
-		y[3] = tm->pd.y;
-		x[2] = tm->po.x;
-		x[3] = tm->pd.x;
-		printf("x0=%d, x1=%d, x2=%d, x3=%d, ",x[0],x[1],x[2],x[3]);
-		printf("y0=%d, y1=%d, y2=%d, y3=%d\n",y[0],y[1],y[2],y[3]);
-		shift = round((tm->iszv - (max4(y) - min4(y))) / 2) * tm->szl;
-		shift -= (min4(y) < 0) ? min4(y) * tm->szl : 0;
-		printf("shift1=%d, ", shift);
-		shift += ((tm->iszh - (max4(x) - min4(x))) / 2) * (tm->bpp / 8);
-		shift -= (min4(x) < 0) ? min4(x) * (tm->bpp / 8) : 0;
-		printf("shift2=%d, ", shift);
+		map_xy(tm, x, y, 2);
+		return ((((tm->iszv - (max4(y) - min4(y))) / 2) * tm->szl)
+				- ((min4(y) < 0) ? min4(y) * tm->szl : 0)
+				+ (((tm->iszh - (max4(x) - min4(x))) / 2) * (tm->bpp / 8))
+				- ((min4(x) < 0) ? min4(x) * (tm->bpp / 8) : 0));
 	}
-	printf("col=%d, lig=%d, szl=%d\n",(shift%tm->szl)/4,shift/tm->szl,tm->szl);
-	return (shift);
 }
 
-int		check_pos(t_mlx *tm, t_draw *td, int *k, int i)
+int			check_pos(t_mlx *tm, t_draw *td, int *k, int i)
 {
 	td->p.x = tm->po.x + (td->incx * i);
 	td->p.y = tm->po.y + (td->incy * i);
 	*k = (tm->szl * td->p.y) + (tm->bpp / 8 * td->p.x) + tm->shift;
 	if (*k < 0 || *k >= tm->max)
 		return (KO);
-	// if (i > 0)
-	// 	i = 0;
-	// {
-	// 	//if (td->incx > 0 && (((*k % tm->szl) / 4 < ((*k - 4) % tm->szl) / 4)))
-	// 	if (td->incx > 0 && tm->midx > 0
-	// 	&& (*k%tm->szl)/4 < 1980/2)
-	// 	{
-	// 		printf("debord droite k=%d, kprev=%d, td->p.x=%d, shiftX=%d\n",
-	// 		(*k%tm->szl)/4,((*k-4)%tm->szl)/4,td->p.x,((tm->shift)%tm->szl)/4);
-	// 		return (KO);
-	// 	}
-		//if (td->incx < 0 && (((*k % tm->szl) / 4 > ((*k + 4) % tm->szl) / 4)))
-		// if (td->incx < 0 && (td->p.x + (((tm->shift)%tm->szl)/4)) <= 10)
-		// {
-		// 	printf("debord gauche k=%d, kprev=%d, td->p.x=%d, shiftX=%d\n",
-		// 	(*k%tm->szl)/4,((*k-4)%tm->szl)/4,td->p.x,((tm->shift)%tm->szl)/4);
-		// 	return (KO);
-		// }
-	//}
 	return (OK);
 }

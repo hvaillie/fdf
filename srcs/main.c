@@ -13,6 +13,11 @@
 #include "fdf.h"
 #include "libft.h"
 
+/*
+** Pour imprimer la map
+** display_map(&tf);
+*/
+
 int		main(int argc, char **argv)
 {
 	t_fdf	tf;
@@ -28,7 +33,6 @@ int		main(int argc, char **argv)
 	}
 	PROTECT(alloc_map(&tf), KO_MAIN);
 	PROTECT(load_file(&tf), KO_MAIN);
-	display_map(&tf);
 	setmlx(&tf);
 	return (OK_MAIN);
 }

@@ -55,7 +55,7 @@
 # define IMAGE_SIZE_V 1090
 # define DEFSZX 20
 # define DEFSZY 20
-# define DEFSZZ 2
+# define DEFSZZ -2
 # define DEFSHIFT -1
 # define DEFROX 0
 # define DEFROY 0
@@ -108,6 +108,7 @@ typedef struct	s_mlx
 	t_point	pd;
 	int		rgb;
 	int		shift;
+	int		midx;
 	int		max;
 	int		szx;
 	int		szy;
@@ -155,7 +156,7 @@ void			projd(t_mlx *tm, t_point *tp);
 void			rotxyz(t_mlx *tm, t_point *tp, int i, int j);
 void			setcolor(t_mlx *tm, int i, int j);
 int				compute_shift(t_mlx *tm);
-int				check_pos(t_mlx *tm, t_draw *td, int *k);
+int				check_pos(t_mlx *tm, t_draw *td, int *k, int i);
 char			*concat_legend(char *str, char *l, int v, char *(*f)(int v));
 int				min4(int i[4]);
 int				max4(int i[4]);

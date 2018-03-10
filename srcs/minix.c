@@ -93,8 +93,8 @@ void			setmlx(t_fdf *tf)
 	tm.tf = tf;
 	setvar(&tm);
 	tm.win_ptr = mlx_new_window(tm.mlx_ptr, tm.wszh, tm.wszv, "Fil De Fer");
-	mlx_key_hook(tm.win_ptr, key_hook, &tm);
-	mlx_mouse_hook(tm.win_ptr, mouse_hook, &tm);
+	mlx_hook(tm.win_ptr, 2, 1L << 0, key_hook, &tm);
+	mlx_hook(tm.win_ptr, 4, 1L << 0, mouse_hook, &tm);
 	mlx_expose_hook(tm.win_ptr, expose_hook, &tm);
 	mlx_loop_hook(tm.mlx_ptr, loop_hook, &tm);
 	legende(&tm);

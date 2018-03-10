@@ -42,11 +42,9 @@ static int		draw_line(t_mlx *tm)
 	i = 0;
 	while (i <= td.loops)
 	{
-		td.p.x = tm->po.x + (td.incx * i);
-		td.p.y = tm->po.y + (td.incy * i);
-		j = 0;
-		if (check_pos(tm, &td, &k))
+		if (check_pos(tm, &td, &k, i))
 		{
+			j = 0;
 			while (j < tm->bpp / 8)
 			{
 				tm->img_data[k + j] = td.octets[j];
@@ -55,7 +53,7 @@ static int		draw_line(t_mlx *tm)
 		}
 		i++;
 	}
-	return (td.loops);
+	return (OK);
 }
 
 static void		draw_h(t_mlx *tm, t_point *tp, int i, int j)
@@ -95,6 +93,7 @@ void			draw_map(t_mlx *tm)
 		j = 0;
 		while (j < tm->tf->nbpt)
 		{
+			tm->midx = j - (tm->tf->nbpt / 2);
 			if (j < tm->tf->nbpt - 1)
 				draw_h(tm, &tp, i, j);
 			if (i < tm->tf->nbrow - 1)

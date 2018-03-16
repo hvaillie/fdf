@@ -92,6 +92,7 @@ int				ft_abs(int i);
 int				ft_min(int i, int j);
 int				ft_max(int i, int j);
 int				ft_sqrt(int nb);
+int				ft_modulo(int a, int b);
 int				ft_sqrtround(int nb);
 int				ft_strchrx(const char *s, int c);
 void			ft_lstdelmaillon(t_list **begin_list, t_list *lst);

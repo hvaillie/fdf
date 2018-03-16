@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base_16.c                                  :+:      :+:    :+:   */
+/*   ft_modulo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvaillie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 17:24:59 by hvaillie          #+#    #+#             */
-/*   Updated: 2018/03/06 17:25:02 by hvaillie         ###   ########.fr       */
+/*   Created: 2018/03/15 18:28:56 by hvaillie          #+#    #+#             */
+/*   Updated: 2018/03/15 18:29:04 by hvaillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char		*ft_itoa_base_16(int value)
+int		ft_modulo(int a, int b)
 {
-	return (ft_itoa_base(value, 16));
+	int		r;
+
+	r = a % b;
+	return ((r < 0) ? r + b : r);
 }

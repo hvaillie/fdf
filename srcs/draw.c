@@ -56,24 +56,24 @@ static int		draw_line(t_mlx *tm)
 	return (OK);
 }
 
-static void		draw_h(t_mlx *tm, t_point *tp, int i, int j)
+static int		draw_h(t_mlx *tm, t_point *tp, int i, int j)
 {
 	rotxyz(tm, tp, i, j);
 	projo(tm, tp);
 	rotxyz(tm, tp, i, j + 1);
 	projd(tm, tp);
 	setcolor(tm, i, j + 1);
-	draw_line(tm);
+	return (draw_line(tm));
 }
 
-static void		draw_v(t_mlx *tm, t_point *tp, int i, int j)
+static int		draw_v(t_mlx *tm, t_point *tp, int i, int j)
 {
 	rotxyz(tm, tp, i, j);
 	projo(tm, tp);
 	rotxyz(tm, tp, i + 1, j);
 	projd(tm, tp);
 	setcolor(tm, i + 1, j);
-	draw_line(tm);
+	return (draw_line(tm));
 }
 
 void			draw_map(t_mlx *tm)
@@ -81,6 +81,7 @@ void			draw_map(t_mlx *tm)
 	int				i;
 	int				j;
 	t_point			tp;
+	int				ok[2];
 
 	tm->img_ptr = mlx_new_image(tm->mlx_ptr, tm->iszh, tm->iszv);
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp,
@@ -91,13 +92,14 @@ void			draw_map(t_mlx *tm)
 	while (i < tm->tf->nbrow)
 	{
 		j = 0;
+		ok[0] = 1;
+		ok[1] = 1;
 		while (j < tm->tf->nbpt)
 		{
-			tm->midx = j - (tm->tf->nbpt / 2);
 			if (j < tm->tf->nbpt - 1)
-				draw_h(tm, &tp, i, j);
+				ok[0] = draw_h(tm, &tp, i, j);
 			if (i < tm->tf->nbrow - 1)
-				draw_v(tm, &tp, i, j);
+				ok[1] = draw_v(tm, &tp, i, j);
 			j++;
 		}
 		i++;

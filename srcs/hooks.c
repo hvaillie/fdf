@@ -43,13 +43,13 @@ int		mouse_hook(int button, int x, int y, void *param)
 	(void)x;
 	(void)y;
 	if ((button == BUT_1 || button == BUT_4) && tm->minrgb > BLACK)
-		tm->minrgb -= DEF_MIN_PALETTE;
+		tm->minrgb -= INC_PALETTE;
 	else if ((button == BUT_2 || button == BUT_5) && tm->minrgb < WHITE)
-		tm->minrgb += DEF_MIN_PALETTE;
+		tm->minrgb += INC_PALETTE;
 	else if (button == BUT_6 && tm->maxrgb < WHITE)
-		tm->maxrgb += DEF_MIN_PALETTE;
+		tm->maxrgb += INC_PALETTE;
 	else if (button == BUT_7 && tm->maxrgb > BLACK)
-		tm->maxrgb -= DEF_MIN_PALETTE;
+		tm->maxrgb -= INC_PALETTE;
 	display_window(tm);
 	return (0);
 }

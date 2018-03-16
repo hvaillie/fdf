@@ -20,6 +20,9 @@ static void		legende_val(t_mlx *tm, char *str)
 {
 	mlx_string_put(tm->mlx_ptr, tm->win_ptr, 800, 1, GREEN, "Valeurs");
 	str = concat_legend(str, "shift=", tm->shift, &ft_itoa);
+	str = concat_legend(str, " shiftV=", tm->shift / tm->szl, &ft_itoa);
+	str = concat_legend(str, " shiftH=", ft_modulo(tm->shift, tm->szl) / 4,
+	 					&ft_itoa);
 	str = concat_legend(str, " szX=", tm->szx, &ft_itoa);
 	str = concat_legend(str, " szY=", tm->szy, &ft_itoa);
 	str = concat_legend(str, " szZ=", tm->szz, &ft_itoa);

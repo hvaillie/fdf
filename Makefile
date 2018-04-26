@@ -24,7 +24,8 @@ SRC = main.c \
 	  rotation.c \
 	  color.c \
 	  debug.c \
-	  util.c
+	  util.c \
+	  shift.c
 
 OBJ = $(SRC:.c=.o)
 

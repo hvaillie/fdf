@@ -68,8 +68,9 @@
 # define GREEN 0x00FF00
 # define RED 0xFF0000
 # define WHITE 0xFFFFFF
-# define DEF_MIN_PALETTE 0x00007F
+# define DEF_MIN_PALETTE 0x808080
 # define DEF_MAX_PALETTE 0xFFFFFF
+# define INC_PALETTE 0x50
 # define PROJPAR 'P'
 # define PROJISO 'I'
 
@@ -108,7 +109,9 @@ typedef struct	s_mlx
 	t_point	pd;
 	int		rgb;
 	int		shift;
-	int		midx;
+	int		arrow;
+	int		pszx;
+	int		pszy;
 	int		max;
 	int		szx;
 	int		szy;

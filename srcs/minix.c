@@ -22,7 +22,7 @@ static void		legende_val(t_mlx *tm, char *str)
 	str = concat_legend(str, "shift=", tm->shift, &ft_itoa);
 	str = concat_legend(str, " shiftV=", tm->shift / tm->szl, &ft_itoa);
 	str = concat_legend(str, " shiftH=", ft_modulo(tm->shift, tm->szl) / 4,
-	 					&ft_itoa);
+						&ft_itoa);
 	str = concat_legend(str, " szX=", tm->szx, &ft_itoa);
 	str = concat_legend(str, " szY=", tm->szy, &ft_itoa);
 	str = concat_legend(str, " szZ=", tm->szz, &ft_itoa);
@@ -67,6 +67,7 @@ void			setvar(t_mlx *tm)
 	tm->iszh = IMAGE_SIZE_H;
 	tm->iszv = IMAGE_SIZE_V;
 	tm->shift = DEFSHIFT;
+	tm->arrow = 0;
 	tm->szx = IMAGE_SIZE_H / tm->tf->nbpt;
 	if (tm->szx == 0)
 		tm->szx = 1;

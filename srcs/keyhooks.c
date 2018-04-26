@@ -17,13 +17,13 @@ int		key_hook_arrow(int key, t_mlx *tm)
 	PROTECT((key == ARROW_UP_KEY || key == ARROW_DOWN_KEY ||
 		key == ARROW_LEFT_KEY || key == ARROW_RIGHT_KEY), KO);
 	if (key == ARROW_UP_KEY && tm->shift >= tm->szl * 4)
-		tm->shift -= tm->szl * 8;
+		tm->arrow -= tm->szl * 8;
 	else if (key == ARROW_DOWN_KEY)
-		tm->shift += tm->szl * 8;
+		tm->arrow += tm->szl * 8;
 	else if (key == ARROW_LEFT_KEY && tm->shift)
-		tm->shift -= 32;
+		tm->arrow -= 32;
 	else if (key == ARROW_RIGHT_KEY)
-		tm->shift += 32;
+		tm->arrow += 32;
 	return (OK);
 }
 

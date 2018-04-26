@@ -31,7 +31,7 @@ static t_draw	set_td(t_mlx *tm)
 	return (td);
 }
 
-static int		draw_line(t_mlx *tm)
+static void		draw_line(t_mlx *tm)
 {
 	t_draw			td;
 	int				i;
@@ -53,27 +53,26 @@ static int		draw_line(t_mlx *tm)
 		}
 		i++;
 	}
-	return (OK);
 }
 
-static int		draw_h(t_mlx *tm, t_point *tp, int i, int j)
+static void		draw_h(t_mlx *tm, t_point *tp, int i, int j)
 {
 	rotxyz(tm, tp, i, j);
 	projo(tm, tp);
 	rotxyz(tm, tp, i, j + 1);
 	projd(tm, tp);
 	setcolor(tm, i, j + 1);
-	return (draw_line(tm));
+	draw_line(tm);
 }
 
-static int		draw_v(t_mlx *tm, t_point *tp, int i, int j)
+static void		draw_v(t_mlx *tm, t_point *tp, int i, int j)
 {
 	rotxyz(tm, tp, i, j);
 	projo(tm, tp);
 	rotxyz(tm, tp, i + 1, j);
 	projd(tm, tp);
 	setcolor(tm, i + 1, j);
-	return (draw_line(tm));
+	draw_line(tm);
 }
 
 void			draw_map(t_mlx *tm)
@@ -81,25 +80,22 @@ void			draw_map(t_mlx *tm)
 	int				i;
 	int				j;
 	t_point			tp;
-	int				ok[2];
 
 	tm->img_ptr = mlx_new_image(tm->mlx_ptr, tm->iszh, tm->iszv);
 	tm->img_data = mlx_get_data_addr(tm->img_ptr, &tm->bpp,
 									&tm->szl, &tm->endian);
 	tm->max = tm->iszh * tm->iszv * (tm->bpp / 8);
-	tm->shift = compute_shift(tm);
+	tm->shift = compute_shift(tm) + tm->arrow;
 	i = 0;
 	while (i < tm->tf->nbrow)
 	{
 		j = 0;
-		ok[0] = 1;
-		ok[1] = 1;
 		while (j < tm->tf->nbpt)
 		{
 			if (j < tm->tf->nbpt - 1)
-				ok[0] = draw_h(tm, &tp, i, j);
+				draw_h(tm, &tp, i, j);
 			if (i < tm->tf->nbrow - 1)
-				ok[1] = draw_v(tm, &tp, i, j);
+				draw_v(tm, &tp, i, j);
 			j++;
 		}
 		i++;

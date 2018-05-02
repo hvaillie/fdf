@@ -11,8 +11,16 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
 
-void		projo(t_mlx *tm, t_point *tp)
+static float	coefz(int max, int min)
+{
+	if (max - min == 0)
+		return (1);
+	return ((float)20 / ft_abs(max - min));
+}
+
+void			projo(t_mlx *tm, t_point *tp)
 {
 	int		x;
 	int		y;
@@ -20,7 +28,7 @@ void		projo(t_mlx *tm, t_point *tp)
 
 	x = tp->x * tm->szx;
 	y = tp->y * tm->szy;
-	z = tp->z * tm->szz;
+	z = tp->z * tm->szz * coefz(tm->tf->zmax, tm->tf->zmin);
 	if (tm->proj == PROJPAR)
 	{
 		tm->po.x = x + (z * KP);
@@ -33,7 +41,7 @@ void		projo(t_mlx *tm, t_point *tp)
 	}
 }
 
-void		projd(t_mlx *tm, t_point *tp)
+void			projd(t_mlx *tm, t_point *tp)
 {
 	int		x;
 	int		y;
@@ -41,7 +49,7 @@ void		projd(t_mlx *tm, t_point *tp)
 
 	x = tp->x * tm->szx;
 	y = tp->y * tm->szy;
-	z = tp->z * tm->szz;
+	z = tp->z * tm->szz * coefz(tm->tf->zmax, tm->tf->zmin);
 	if (tm->proj == PROJPAR)
 	{
 		tm->pd.x = x + (z * KP);

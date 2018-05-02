@@ -40,11 +40,11 @@ int		key_hook_num(int key, t_mlx *tm)
 	else if (key == NUM6_KEY)
 		tm->szx++;
 	else if (key == NUM7_KEY)
-		tm->szz--;
+		tm->szz++;
 	else if (key == NUM8_KEY)
 		tm->szy++;
 	else if (key == NUM9_KEY)
-		tm->szz++;
+		tm->szz--;
 	return (OK);
 }
 

@@ -33,6 +33,8 @@ static void		legende_val(t_mlx *tm, char *str)
 	ft_bzero((void*)str, 100);
 	str = concat_legend(str, "minRGB=", tm->minrgb, &ft_itoa_base_16);
 	str = concat_legend(str, " maxRGB=", tm->maxrgb, &ft_itoa_base_16);
+	str = concat_legend(str, " minZ=", tm->tf->zmin, &ft_itoa);
+	str = concat_legend(str, " maxZ=", tm->tf->zmax, &ft_itoa);
 	mlx_string_put(tm->mlx_ptr, tm->win_ptr, 800, 40, WHITE, str);
 }
 
@@ -99,6 +101,5 @@ void			setmlx(t_fdf *tf)
 	mlx_hook(tm.win_ptr, 4, 1L << 0, mouse_hook, &tm);
 	mlx_expose_hook(tm.win_ptr, expose_hook, &tm);
 	mlx_loop_hook(tm.mlx_ptr, loop_hook, &tm);
-	legende(&tm);
 	mlx_loop(tm.mlx_ptr);
 }
